@@ -53,6 +53,9 @@ namespace YAF.Utils.Helpers
         {
             try
             {
+                if (input == "60" || int.TryParse(input, out var _))
+                    input = "Central European Standard Time";
+
                 return TimeZoneInfo.FindSystemTimeZoneById(input);
             }
             catch (Exception)
