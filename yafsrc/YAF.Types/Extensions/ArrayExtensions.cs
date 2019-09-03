@@ -24,19 +24,22 @@
 
 namespace YAF.Types.Extensions
 {
-	#region Using
+    #region Using
 
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Text;
 
     using YAF.Types;
 
     #endregion
 
-	/// <summary>
-	/// The bit bool extensions.
-	/// </summary>
-	public static class BitBoolExtensions
+    /// <summary>
+    /// The bit bool extensions.
+    /// </summary>
+    public static class BitBoolExtensions
 	{
 		#region Public Methods
 
@@ -133,8 +136,16 @@ namespace YAF.Types.Extensions
 			arrayBool.ForEachIndex((b, i) => finalValue = SetBitFromBool(finalValue, i, b));
 
 			return finalValue;
-		}
+        }
 
-		#endregion
-	}
+        public static List<T> ToListOf<T>(this byte[] array, Func<byte[], int, T> bitConverter)
+        {
+            var size = Marshal.SizeOf(typeof(T));
+            return Enumerable.Range(0, array.Length / size)
+                .Select(i => bitConverter(array, i * size))
+                .ToList();
+        }
+
+        #endregion
+    }
 }
