@@ -250,7 +250,7 @@ namespace YAF.Core.Services
 
                 // Ederon : 9/7/2007
                 // resync all boards - necessary for propr last post bubbling
-                this.GetRepository<Board>().Resync();
+                //this.GetRepository<Board>().Resync();
 
                 this.RaiseEvent.RaiseIssolated(
                     new AfterUpgradeDatabaseEvent(prevVersion, YafForumInfo.AppVersion),
